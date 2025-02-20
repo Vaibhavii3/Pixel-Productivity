@@ -109,8 +109,16 @@ function PomodoroTimer() {
         <div className="pomo-container">
             <h1 className="pomo-title">Pomodoro Timer</h1>
 
-            {/* Progress Indicator */}
-            <p>Session: {sessionCount}/{sessionsBeforeLongBreak}</p> 
+
+            {/* Mode indicator */}
+            <div className="mode-box">
+                <div className={`mode-indicator ${isBreak ? 'break-mode' : 'work-mode'}`}>
+                    {isBreak ? (sessionCount % sessionsBeforeLongBreak === 0 ? "LONG BREAK" : "SHORT BREAK") : "WORK TIME"}
+                </div>
+
+                {/* Progress Indicator */}
+                <p className="session-font">Session: {sessionCount}/{sessionsBeforeLongBreak}</p> 
+            </div>
 
             <div className="pomo-timer">{formatTime(time)}</div>
 
@@ -122,21 +130,35 @@ function PomodoroTimer() {
 
             <div className="pomo-settings">
 
-                <label> Work Duration: </label>
-                <button onClick={() => handleSetWorkTime(25)} className="set-button"> 25 min </button>
+                <div className="work-box">
 
-                <button onClick={() => handleSetWorkTime(50)} className="set-button"> 50 min </button>
+                <div className="work">
+                    <label> Work Duration: </label>
+                    <button onClick={() => handleSetWorkTime(25)} className="set-button"> 25 min </button>
 
-                <input type="number" placeholder="Custom min" onChange={handleCustomTime} className="custom-button" />
+                    <button onClick={() => handleSetWorkTime(50)} className="set-button"> 50 min </button>
 
-                <label>Break Duration:</label>
-                <input type="number" placeholder="Custom min" onChange={handleCustomBreakTime} className="custom-button" />
+                    <input type="number" placeholder="Custom min" onChange={handleCustomTime} className="custom-button" />
+                </div>
 
-                <label>Long Break Duration:</label>
-                <input type="number" placeholder="Custom min" onChange={handleCustomLongBreakTime} className="custom-button" />
+                <div className="break">
+                    <label>Break Duration:</label>
+                    <input type="number" placeholder="Custom min" onChange={handleCustomBreakTime} className="custom-button" />
+                </div>
+                </div>
 
-                <label>Sessions before Long Break:</label>
-                <input type="number" placeholder="Default: 4" onChange={handleCustomSessions} className="custom-button" />
+                <div className="break-box">
+
+                <div className="long-break">
+                    <label>Long Break Duration:</label>
+                    <input type="number" placeholder="Custom min" onChange={handleCustomLongBreakTime} className="custom-button" />
+                </div>
+
+                <div className="session-box">
+                    <label>Sessions before Long Break:</label>
+                    <input type="number" placeholder="Default: 4" onChange={handleCustomSessions} className="custom-button" />
+                </div>
+                </div>
 
             </div>
         </div>

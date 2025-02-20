@@ -1,47 +1,76 @@
-/* Pixelated Font */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-/* body {
-    background-color: #250000;
-    color: #ffdd00;
-    font-family: 'Press Start 2P', cursive;
-    text-align: center;
-    image-rendering: pixelated;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-} */
 
 .pomo-container {
     background-color: #7a0000;
     border: 8px solid #ff4500;
     padding: 20px;
+    margin-top: 25px;
     box-shadow: 8px 8px 0px #9c2d00;
 }
 
 .pomo-title {
     font-size: 20px;
-    color: #ff4500;
-    text-shadow: 3px 3px 0px #7a0000;
-    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #ffdd00;
+    text-shadow: 3px 3px 0px #7a0000,
+    6px 7px 0 #000000;
+    margin-bottom: 30px;
+    margin-top: 20px;
 }
 
 .pomo-timer {
-    font-size: 36px;
-    background-color: #490000;
-    padding: 20px;
-    border: 6px solid #ff4500;
+    font-size: 40px;
+    background: #250000;
+    padding: 15px 20px;
+    border: 6px solid #ffdd00;
     box-shadow: 6px 6px 0px #9c2d00;
     display: inline-block;
     margin-bottom: 20px;
+    margin-top: 10px;
 }
 
-.pomo-button-container {
+.mode-box {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px ;
+}
+
+.mode-indicator {
+    font-size: 14px;
+    padding: 10px;
+    background-color: #7a0000;
+    border: 4px solid #ff4500;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.session-font {
+    text-shadow: 3px 3px 0 #000;
+}
+
+.work-mode {
+    background-color: #ff0000;
+    color: #fff;
+}
+
+.break-mode {
+    background-color: #00ff00;
+    color: #000;
+}
+
+.work-box {
+    display: flex;
+    gap: 50px;
+}
+
+.break-box {
+    display: flex;
+    gap: 70px;
+}
+
+.pomo-buttons {
+    margin-top: 10px;
 }
 
 .pomo-button {
@@ -49,60 +78,55 @@
     color: white;
     border: 4px solid #9c2d00;
     padding: 10px 15px;
+    margin: 5px;
     cursor: pointer;
     font-size: 12px;
     font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     box-shadow: 4px 4px 0px #7a0000;
     transition: all 0.1s ease-in-out;
-}
-
-.pomo-button:hover {
-    transform: scale(1.05);
 }
 
 .pomo-button:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
 }
 
-.set-button {
-    background-color: #ff4500;
-    color: white;
+.pomo-settings {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pomo-settings label {
+    display: block;
+    color: #ffdd00;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #000;
+} 
+
+label {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.set-button, .custom-button {
+    background-color: #ffdd00;
     border: 4px solid #9c2d00;
-    padding: 10px 15px;
-    cursor: pointer;
+    padding: 8px;
     font-size: 12px;
     font-family: 'Press Start 2P', cursive;
-    text-transform: uppercase;
-    box-shadow: 4px 4px 0px #7a0000;
-    transition: all 0.1s ease-in-out;
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-.set-button:hover {
-    transform: scale(1.05);
-}
-
-.set-button:active {
-    transform: scale(0.95);
-}
-
-.custom-button {
-    background-color: #ff4500;
-    color: white;
-    border: 4px solid #9c2d00;
-    padding: 10px 15px;
     cursor: pointer;
-    font-size: 12px;
-    font-family: 'Press Start 2P', cursive;
     text-transform: uppercase;
     box-shadow: 4px 4px 0px #7a0000;
-    transition: all 0.1s ease-in-out;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin: 5px;
 }
 
-.custom-button::placeholder {
-    color: rgba(255, 255, 255, 0.7)
+input.custom-button {
+    text-align: center;
+    width: 180px;
+    border: 4px solid #ff4500;
+    background-color: #490000;
+    color: #ffdd00;
+    font-family: 'Press Start 2P', cursive;
 }
