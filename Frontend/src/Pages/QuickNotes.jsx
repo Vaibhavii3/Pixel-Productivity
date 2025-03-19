@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "../style/quickNotes.css";
 
-const API_URL = "http://localhost:5000/api/quicknotes";
+const API_URL = `${process.env.REACT_APP_API_BASE_URL}/api/quicknotes`;
 
 function QuickNotes() {
     const [note, setNote] = useState("");
