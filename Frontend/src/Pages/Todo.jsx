@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "../style/todo.css";
-// import "./style/char.css";
+
+const API_URL = "http://localhost:5000/api/notes";
 
 function Todo() {
     const [tasks, setTasks] = useState([]);
     const [input, setInput] = useState("");
 
-    const addTask = () => {
+    // Fetch tasks from backend
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get(API_URL);
+                setTasks(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+        fetchTasks();
+    }, []);
+
+    const addTask = async () => {
         if (input.trim()) {
-            setTasks([...tasks, { text: input, done: false }]);
-            setInput("");
+            try {
+                const response = await axios.post(API_URL, { content: input });
+                setTasks([...tasks, response.data]);
+                setInput("");
+            } catch (error) {
+                console.log("Error adding task:", error);
+            }
         }
     };
 
@@ -20,8 +40,13 @@ function Todo() {
         setTasks(newTasks);
     };
 
-    const deleteTask = (index) => {
-        setTasks(tasks.filter((_, i) => i !== index));
+    const deleteTask = async (id) => {
+        try {
+            await axios.delete(`${API_URL}/${id}`);
+            setTasks(tasks.filter((task) => task._id !== id));
+        } catch (error) {
+            console.error("Error deleting task:", error);
+        }
     };
 
     return (
@@ -39,17 +64,17 @@ function Todo() {
                 <button className="todo-button" onClick={addTask}>Add</button>    
             </div>
             <ul className="todo-task-list">
-                {tasks.map((task, index) => (
-                    <li key={index} className="todo-task-item">
+                {tasks.map((task) => (
+                    <li key={task._id} className="todo-task-item">
                         <span 
                             className={`todo-task-text ${task.done ? 'todo-task-done' : ''}`}
-                            onClick={() => toggleTask(index)}
+                            onClick={() => toggleTask(task)}
                         >
-                            {task.text}
+                            {task.content}
                         </span>
                         <button 
                             className="todo-delete-button"
-                            onClick={() => deleteTask(index)}
+                            onClick={() => deleteTask(task._id)}
                         >
                             X
                         </button>

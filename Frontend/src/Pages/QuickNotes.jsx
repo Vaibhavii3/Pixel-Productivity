@@ -1,31 +1,47 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import "../style/quickNotes.css";
+
+const API_URL = "http://localhost:5000/api/quicknotes";
 
 function QuickNotes() {
     const [note, setNote] = useState("");
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
-        const savedNotes = JSON.parse(localStorage.getItem("quickNotes"));
-        setNotes(savedNotes);
+        const fetchQuickNotes = async () => {
+            try {
+                const response = await axios.get(API_URL);
+                setNotes(response.data);
+            } catch (error) {
+                console.error("Error fetching notes:", error);
+            }
+        };
+        fetchQuickNotes();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("quickNotes", JSON.stringify(notes));
-    }, [notes]);
-
     //function to add a new note
-    const addNote = () => {
-        if (note.trim() !== "") {
-            setNotes([...notes, note]);
-            setNote("");
+    const addNote = async () => {
+        if (note.trim()) {
+            try {
+                const response = await axios.post(API_URL, {
+                    notes: note });
+                setNotes([...notes, response.data]);
+                setNote("");
+            } catch (error) {
+                console.log("Error adding Note:", error);
+            }
         }
     };
 
     //function to delete a note
-    const deleteNote = (index) => {
-        const newNotes = notes.filter((_, i) => i !== index);
-        setNotes(newNotes);
+    const deleteNote = async (id) => {
+        try {
+            await axios.delete(`${API_URL}/${id}`);
+            setNotes(notes.filter((note) => note._id !== id));
+        } catch (error) {
+            console.error("Error deleting note:", error);
+        }
     };
 
     return (
@@ -45,12 +61,12 @@ function QuickNotes() {
         </div>
             <div className="quick-result">
                 <ul className="quick-task-list">
-                    {notes.map((note, index) => (
+                    {notes.map((note) => (
 
-                        <li key={index} className="quick-task-item">
-                            <span className="quick-task-text">{note}</span>
+                        <li key={note._id} className="quick-task-item">
+                            <span className="quick-task-text">{note.notes}</span>
 
-                            <button className="quick-delete-button" onClick={() => deleteNote(index)}>🔥 Delete</button>
+                            <button className="quick-delete-button" onClick={() => deleteNote(note._id)}>🔥 Delete</button>
                             
                         </li>
                     ))}
