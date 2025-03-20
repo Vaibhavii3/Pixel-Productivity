@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
         if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-        res.status({ token, user: { username: user.username, email: user.email } });
+        res.json({ token, user: { username: user.username, email: user.email } });
     }   catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -37,8 +37,11 @@ exports.login = async (req, res) => {
 
 // Middleware to Verify Token
 exports.verifyToken = (req, res, next) => {
-    const token = req.header("Authorization");
-    if (!token) return res.status(401).json({ error: "Access denied" });
+    const authHeader = req.header("Authorization");
+    if (!authHeader) return res.status(401).json({ error: "Access denied" });
+
+    const token = authHeader.split(" ")[1]; // Extract token
+    if (!token) return res.status(401).json({ error: "Invalid token format" });
 
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
@@ -48,6 +51,7 @@ exports.verifyToken = (req, res, next) => {
         res.status(400).json({ error: "Invalid token" });
     }
 };
+
 
 // Proteched Route
 exports.protectedRoute = (req, res) => {

@@ -10,10 +10,19 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
-      navigate("/home");
+        const data = await login(email, password);
+        console.log("Login response:", data);
+
+        if (data.token) {
+            console.log("Token received, navigating to home...");
+            localStorage.setItem("token", data.token);  // Save token for authentication
+            navigate("/home");  // Navigate immediately
+        } else {
+            alert("Login failed, please try again.");
+        }
     } catch (error) {
-      alert(error.response.data.error);
+        console.error("Login error:", error);
+        alert(error.response?.data?.message || "Login failed");
     }
   };
 

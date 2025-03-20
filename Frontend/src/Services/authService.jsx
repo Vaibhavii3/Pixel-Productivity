@@ -7,9 +7,18 @@ export const register = async (username, email, password) => {
 };
 
 export const login = async (email, password) => {
-    const response = await axios.post(`${API_URL}/login`, { email, password });
-    if (response.data.token) localStorage.setItem("token", response.data.token);
-    return response.data;
+    try {
+        const response = await axios.post(`${API_URL}/login`, { email, password });
+
+        if (response.data.token) {
+            console.log("Storing token in localStorage...");
+            localStorage.setItem("token", response.data.token);
+        }
+
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data.error : "Login failed";
+    }
 };
 
 export const logout = () => {
