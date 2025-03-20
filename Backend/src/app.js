@@ -10,7 +10,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: "https://pixel-productivity.vercel.app",
+    origin: ["http://localhost:3000", "https://pixel-productivity.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true, 
 }));

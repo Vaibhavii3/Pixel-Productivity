@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/home.css";
+import { logout } from "../Services/authService";
 
 function Home() {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
     return (
         <div className="home-container">
             <h1 className="home-title">🔥Welcome to Pixel Todo 🔥</h1>
@@ -20,6 +29,8 @@ function Home() {
                 <Link to="/pomodoro">
                     <button className="home-button"> Pomodoro Timer </button>
                 </Link>
+
+                <button className="home-button" onClick={handleLogout}>Logout</button>
 
                 {/* <Link to="/daily">
                     <button className="home-button"> Dashboard </button>
