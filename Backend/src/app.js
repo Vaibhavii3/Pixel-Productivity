@@ -19,7 +19,6 @@ app.use(express.json());
 // Routes
 app.use("/api/notes", require("./routes/taskRoutes"));
 app.use("/api/quicknotes", require("./routes/quickNotesRoutes"));
-
-
+app.use("/auth", require("./routes/authRoutes"));
 
 module.exports = app;
